@@ -1,0 +1,2 @@
+# mapmyindia-workmate-apis
+A set of powerful work force management APIs which helps the user to get all the data related to their organizations such as live location employees, client details and task details etc. These workforce management APIs are powered by MapmyIndia's own Map, IoT and workmate platform. MapmyIndia Workmate easily integrates into existing cloud services via our workforce management APIs. These APIs helps to improve the organizational effiency by providing location intellegence to employees.
