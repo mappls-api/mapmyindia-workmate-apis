@@ -31,7 +31,7 @@
           {
             "name": "apiVersion",
             "in": "header",
-            "description": "Header for this API. Available values are v1, Default value is v1.0",
+            "description": "API version should be mentioned in the header along with bearer Token. Available version is v1.0, Default version is v1.0",
             "example": "v1.0",
             "required": true,
             "schema": {
@@ -52,6 +52,7 @@
             "in": "query",
             "description": "send the user Ids in comma separated format to get the list of selected user details. If it is not passed all the user details will be fetched.",
             "required": false,
+            "example": 3223,
             "schema": {
               "type": "number"
             }
@@ -105,7 +106,7 @@
           {
             "name": "apiVersion",
             "in": "header",
-            "description": "Header for this API. Available values are v1, Default value is v1.0",
+            "description": "API version should be mentioned in the header along with bearer Token. Available version is v1.0, Default version is v1.0",
             "example": "v1.0",
             "required": true,
             "schema": {
@@ -122,7 +123,7 @@
             }
           },
           {
-            "name": "EndTime",
+            "name": "endTime",
             "in": "query",
             "description": "EPOCH time stamp in local time. Records will be fetched till this end time.",
             "required": false,
@@ -190,12 +191,12 @@
         ],
         "operationId": "createClient",
         "summary": "To create new client",
-        "description": "Create Client API allows you to add a new client into your organization. Using this API, You can create a new client with name, address, lat,long, contact details, Department along with their contact details.",
+        "description": "Create Client API allows you to add a new client into your organization. Using this API, You can create a new client with a name, address, lat,long, contact details, Department along with their contact details.",
         "parameters": [
           {
             "name": "apiVersion",
             "in": "header",
-            "description": "Header for this API. Available values are v1, Default value is v1.0",
+            "description": "API version should be mentioned in the header along with bearer Token. Available version is v1.0, Default version is v1.0",
             "example": "v1.0",
             "required": true,
             "schema": {
@@ -256,7 +257,7 @@
           {
             "name": "apiVersion",
             "in": "header",
-            "description": "Header for this API. Available values are v1, Default value is v1.0",
+            "description": "Header for this API. Available values are v1.0, Default value is v1.0",
             "example": "v1.0",
             "required": true,
             "schema": {
@@ -293,7 +294,7 @@
           {
             "name": "assigneeId",
             "in": "query",
-            "description": "Unique Id of the user who is going to perform this task.",
+            "description": "Unique Id of the user who performs this task.",
             "required": false,
             "schema": {
               "type": "number"
@@ -366,7 +367,7 @@
           {
             "name": "apiVersion",
             "in": "header",
-            "description": "Header for this API. Available values are v1, Default value is v1.0",
+            "description": "API version should be mentioned in the header along with bearer Token. Available version is v1.0, Default version is v1.0",
             "example": "v1.0",
             "required": true,
             "schema": {
@@ -377,27 +378,36 @@
             "name": "userId",
             "in": "path",
             "required": true,
+            "description": "Unique ID of the user.",
+            "example": 32323,
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "type": "number",
+              "items": {
+                "type": "integer",
+                "format": "int32"
+              }
             }
           },
           {
             "name": "startTime",
             "in": "query",
             "required": true,
+            "description": "Start time of the report. At a time maximum of 31 days can data can be fetched together. Time in epoch time.",
+            "example": 1595395890,
             "schema": {
               "type": "integer",
-              "format": "int32"
+              "format": "int64"
             }
           },
           {
             "name": "endTime",
             "in": "query",
             "required": true,
+            "description": "Start time of the report. At a time maximum of 31 days can data can be fetched together. Time in epoch time.",
+            "example": 1595325880,
             "schema": {
               "type": "integer",
-              "format": "int32"
+              "format": "int64"
             }
           }
         ],
@@ -443,13 +453,13 @@
           "Company Settings"
         ],
         "operationId": "getCustomForms",
-        "summary": "To get the custom form details and custom form Id in the account",
-        "description": "It gives all the forms which is being created under your account. using this API you can get the unique Ids of differnt form ad it can be used in custom form data API.",
+        "summary": "To get the form's Id and their details from your account.",
+        "description": "It gives all the forms which is being created under your account. using this API you can get the unique Ids of differnt form and it can be used in custom form data API.",
         "parameters": [
           {
             "name": "apiVersion",
             "in": "header",
-            "description": "Header for this API. Available values are v1, Default value is v1.0",
+            "description": "API version should be mentioned in the header along with bearer Token. Available version is v1.0, Default version is v1.0",
             "example": "v1.0",
             "required": true,
             "schema": {
@@ -463,7 +473,7 @@
             "content": {
               "customForms": {
                 "schema": {
-                  "$ref": "#/components/schemas/customFormsObjectResponse"
+                  "$ref": "#/components/schemas/formsObjectResponse"
                 }
               }
             }
@@ -499,13 +509,13 @@
           "Reports"
         ],
         "operationId": "getCustomFormsData",
-        "summary": "To get custom form based check in/out details",
+        "summary": "To get form based check in/out details",
         "description": "Get the complete detail about the check in/check out activity against the particular form. Get the form Id from the custom form API.",
         "parameters": [
           {
             "name": "apiVersion",
             "in": "header",
-            "description": "Header for this API. Available values are v1, Default value is v1.0",
+            "description": "API version should be mentioned in the header along with bearer Token. Available version is v1.0, Default version is v1.0",
             "example": "v1.0",
             "required": true,
             "schema": {
@@ -515,6 +525,8 @@
           {
             "name": "formId",
             "in": "path",
+            "description": "Unique ID of the Form. It can be fetched from company setting forms API.",
+            "example": "AD329238910921",
             "required": true,
             "schema": {
               "type": "string"
@@ -524,6 +536,8 @@
             "name": "startTime",
             "in": "query",
             "required": true,
+            "description": "Start time of the report. At a time maximum of 31 days can data can be fetched together. Time in epoch time.",
+            "example": 1595395890,
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -533,6 +547,8 @@
             "name": "endTime",
             "in": "query",
             "required": true,
+            "description": "Start time of the report. At a time maximum of 31 days can data can be fetched together. Time in epoch time.",
+            "example": 1595325880,
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -542,8 +558,10 @@
             "name": "userId",
             "in": "query",
             "required": false,
+            "description": "Unique ID of the user.",
+            "example": 32323,
             "schema": {
-              "type": "array",
+              "type": "number",
               "items": {
                 "type": "integer",
                 "format": "int32"
@@ -554,8 +572,10 @@
             "name": "clientId",
             "in": "query",
             "required": false,
+            "description": "Unique ID of the client.",
+            "example": 2133,
             "schema": {
-              "type": "array",
+              "type": "number",
               "items": {
                 "type": "integer",
                 "format": "int32"
@@ -569,7 +589,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/customFormsDataObjectResponse"
+                  "$ref": "#/components/schemas/formsDataObjectResponse"
                 }
               }
             }
@@ -610,7 +630,7 @@
           {
             "name": "apiVersion",
             "in": "header",
-            "description": "Header for this API. Available values are v1, Default value is v1.0",
+            "description": "API version should be mentioned in the header along with bearer Token. Available version is v1.0, Default version is v1.0",
             "example": "v1.0",
             "required": true,
             "schema": {
@@ -817,7 +837,7 @@
                 "userName": {
                   "type": "string",
                   "description": "Name of the user who has created this client.",
-                  "example": 3232
+                  "example": "kalaivanan"
                 },
                 "typeId": {
                   "type": "integer",
@@ -833,13 +853,13 @@
                   "type": "number",
                   "format": "double",
                   "description": "Latitude of the client location.",
-                  "example": 28.55150497351832
+                  "example": 28.551506
                 },
                 "long": {
                   "type": "number",
                   "format": "double",
                   "description": "Longitude of the client location.",
-                  "example": 77.26811878532021
+                  "example": 77.268118
                 },
                 "creationTime": {
                   "type": "integer",
@@ -890,13 +910,13 @@
                       "type": "number",
                       "format": "double",
                       "description": "Last activity location latitude.",
-                      "example": 28.5506477438988
+                      "example": 28.550646
                     },
                     "Long": {
                       "type": "number",
                       "format": "double",
                       "description": "Last activity location Longitude.",
-                      "example": 77.26900379189944
+                      "example": 77.269003
                     },
                     "visitedUserId": {
                       "type": "integer",
@@ -955,13 +975,13 @@
             "type": "number",
             "format": "double",
             "description": "Latitude of the client location.",
-            "example": 28.55150497351832
+            "example": 28.551504
           },
           "long": {
             "type": "number",
             "format": "double",
             "description": "Longitude of the client location.",
-            "example": 77.26811878532021
+            "example": 77.268118
           },
           "viewRight": {
             "type": "integer",
@@ -1199,9 +1219,9 @@
                   "description": "Users location address for the given time.",
                   "example": "40/2, Kalasipalyam, Bengaluru, Karnataka. 18 m from MP Auto Consultancy pin- 560002 (India)"
                 },
-                "travelledDistance": {
+                "distance": {
                   "type": "string",
-                  "description": "Total travelled distance from start time to this location time period.In is in kilometer.",
+                  "description": "Total travelled distance from start time to this location time period.It is in kilometer.",
                   "example": "10. 00"
                 },
                 "driftStatus": {
@@ -1218,13 +1238,13 @@
                   "type": "number",
                   "format": "double",
                   "description": "Latitude value of location",
-                  "example": 28.5506076
+                  "example": 28.550607
                 },
                 "long": {
                   "type": "number",
                   "format": "double",
                   "description": "longitude value of the location.",
-                  "example": 77.84383
+                  "example": 77.843835
                 },
                 "speed": {
                   "type": "integer",
@@ -1322,56 +1342,56 @@
                   "type": "number",
                   "format": "double",
                   "description": "Latitude value of Work end location",
-                  "example": 28.5506076
+                  "example": 28.550607
                 },
                 "workEndLongitude": {
                   "type": "number",
                   "format": "double",
                   "description": "Longitude value of Work end location",
-                  "example": 77.2689068
+                  "example": 77.268906
                 },
                 "workStartLatitude": {
                   "type": "number",
                   "format": "double",
                   "description": "Longitude value of Work Start location",
-                  "example": 28.5336155
+                  "example": 28.533615
                 },
                 "workStartLongitude": {
                   "type": "number",
                   "format": "double",
                   "description": "Longitude value of Work Start location",
-                  "example": 77.2596007
+                  "example": 77.2596
                 },
                 "workEndOdometer": {
                   "type": "number",
                   "format": "float",
-                  "description": "Odometer reading at work end",
-                  "example": "2o.0"
+                  "description": "work end Odometer reading.",
+                  "example": 20
                 },
                 "workStartOdometer": {
                   "type": "number",
                   "format": "float",
-                  "description": "Odometer reading at work start",
+                  "description": "Work start Odometer reading.",
                   "example": 10
                 },
                 "costFactor": {
                   "type": "number",
                   "format": "float",
-                  "description": "per km travelled cost. It will be multiplyed against distance travelled by the user.",
+                  "description": "Per km travelled cost. It will be multiplyed against distance travelled by the user.",
                   "example": 3.5
                 },
                 "distance": {
                   "type": "number",
                   "format": "double",
                   "description": "Total travel distance between work start to work end activity. It is calculated based on the location details collected from app",
-                  "example": 26.0793153476554
+                  "example": 26.07931
                 }
               }
             }
           }
         }
       },
-      "customFormsObjectResponse": {
+      "formsObjectResponse": {
         "type": "object",
         "properties": {
           "forms": {
@@ -1398,7 +1418,7 @@
           }
         }
       },
-      "customFormsDataObjectResponse": {
+      "formsDataObjectResponse": {
         "type": "object",
         "properties": {
           "employeeName": {
@@ -1428,7 +1448,7 @@
           },
           "clientName": {
             "type": "string",
-            "description": "Name of Checked in Client name",
+            "description": "Name of Checked in Client.",
             "example": "Mapmyindia"
           },
           "departmentName": {
@@ -1453,7 +1473,7 @@
           },
           "checkoutDateTime": {
             "type": "string",
-            "description": "checked out location address",
+            "description": "Address of the checked out location",
             "example": "14, hulsur, muniswara layout, Bangalore -560008"
           },
           "totalHoursSpent": {
@@ -1468,13 +1488,8 @@
           },
           "tags": {
             "type": "string",
-            "description": "During check in time, selected tags. it indicated the check in purpose.",
+            "description": "List of selected tags during check in. It indicates the check in purpose.",
             "example": "Meeting"
-          },
-          "attachments": {
-            "type": "string",
-            "description": "Images and documetns Ids.",
-            "example": "jodsnwjeojoewo"
           },
           "customFormData": {
             "type": "array",
@@ -1495,12 +1510,12 @@
           },
           "clientEmailId": {
             "type": "string",
-            "description": "Checked in client or the department contact person email id",
+            "description": "Contact person email id of the checked in client or the department",
             "example": "sundaram@gmail.com"
           },
           "clientMobileNo": {
             "type": "string",
-            "description": "Checked in client or department contact person mobile number",
+            "description": "Contact person mobile number of the checked in client or department",
             "example": 934838232
           }
         }
@@ -1515,12 +1530,12 @@
           },
           "creationTime": {
             "type": "string",
-            "description": "Time at which this department is being created. EPoch time.",
+            "description": "Time at which this department is being added. EPoch time.",
             "example": 1516618791
           },
           "updationTime": {
             "type": "string",
-            "description": "Time at which this department is being upated last time. Epoch time.",
+            "description": "Time at which this department is being upated last time. It is in Epoch time.",
             "example": 1593088033
           },
           "name": {
