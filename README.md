@@ -10,10 +10,6 @@ Email: apisupport@mapmyindia.com
 Phone Number: +91-11-46009900
 Extension: : 952
 
-For other queries please contact MapmyIndia customer support:
-
-Email: vtsupport@mapmyindia.com
-Customer Support: +91-9999-333-223
 
 To know more on how to create your authorization tokens, please use our authorization token URL. More details available [here](https://mapmyindia.com/api/advanced-maps/doc/authentication-api.php)
 
