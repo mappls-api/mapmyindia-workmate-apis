@@ -52,7 +52,7 @@
             "in": "query",
             "description": "send the user Ids in comma separated format to get the list of selected user details. If it is not passed all the user details will be fetched.",
             "required": false,
-            "example": 3223,
+            "example": "3223,23",
             "schema": {
               "type": "number"
             }
@@ -90,6 +90,9 @@
           },
           "404": {
             "description": "Not Found - URL Not Found"
+          },
+          "406": {
+            "description": "userId not belong to your account"
           }
         }
       }
@@ -134,8 +137,9 @@
           {
             "name": "userId",
             "in": "query",
-            "description": "Unique ID of the user. Once it is mentioned, only client created by this user will be displayed.",
+            "description": "Unique ID of the user. Once it is mentioned, only client created by these user will be displayed.",
             "required": false,
+            "example": "332,4323",
             "schema": {
               "type": "integer"
             }
@@ -145,6 +149,7 @@
             "in": "query",
             "description": "Unique ID of the client. To get the details about only the mentioned client.",
             "required": false,
+            "example": "3232,3293",
             "schema": {
               "type": "integer"
             }
@@ -182,6 +187,9 @@
           },
           "404": {
             "description": "Not Found - URL Not Found"
+          },
+          "406": {
+            "description": "userId not belong to your account"
           }
         }
       },
@@ -351,6 +359,9 @@
           },
           "404": {
             "description": "Not Found - URL Not Found"
+          },
+          "406": {
+            "description": "userId not belong to your account"
           }
         }
       }
@@ -443,6 +454,9 @@
           },
           "404": {
             "description": "Not Found - URL Not Found"
+          },
+          "406": {
+            "description": "userId not belong to your account"
           }
         }
       }
@@ -454,7 +468,7 @@
         ],
         "operationId": "getCustomForms",
         "summary": "To get the form's Id and their details from your account.",
-        "description": "It gives all the forms which is being created under your account. using this API you can get the unique Ids of differnt form and it can be used in custom form data API.",
+        "description": "It gives all the forms which are created under your account. using this API you can get the unique Ids of differnt form and it can be used in custom form data API.",
         "parameters": [
           {
             "name": "apiVersion",
@@ -615,6 +629,9 @@
           },
           "404": {
             "description": "Not Found - URL Not Found"
+          },
+          "406": {
+            "description": "userId not belong to your account"
           }
         }
       }
@@ -694,6 +711,9 @@
           },
           "404": {
             "description": "Not Found - URL Not Found"
+          },
+          "406": {
+            "description": "userId not belong to your account"
           }
         }
       }
@@ -772,12 +792,12 @@
                 "branchName": {
                   "type": "string",
                   "description": "Users branch name of the work place.",
-                  "example": true
+                  "example": "Bangalore"
                 },
                 "branchCode": {
                   "type": "string",
                   "description": "Users branch code of the work place.",
-                  "example": true
+                  "example": "CE12"
                 },
                 "workPlace": {
                   "$ref": "#/components/schemas/workPlaceDetailsObjectResponse"
@@ -1161,7 +1181,7 @@
                         }
                       }
                     },
-                    "checkOutdetails": {
+                    "checkOutDetails": {
                       "type": "object",
                       "properties": {
                         "lat": {
@@ -1190,13 +1210,6 @@
                           "type": "string",
                           "description": "check out comments",
                           "example": "Task is completed"
-                        },
-                        "docIDs": {
-                          "type": "array",
-                          "description": "check out images and documents",
-                          "items": {
-                            "example": "ddttyrtr3112"
-                          }
                         }
                       }
                     }
@@ -1210,7 +1223,7 @@
       "movementDataObjectResponse": {
         "type": "object",
         "properties": {
-          "movement": {
+          "movements": {
             "type": "array",
             "items": {
               "properties": {
@@ -1421,102 +1434,114 @@
       "formsDataObjectResponse": {
         "type": "object",
         "properties": {
-          "employeeName": {
-            "type": "string",
-            "description": "Name of the Employee",
-            "example": "kalaivanan Sundaram"
-          },
-          "employeeId": {
-            "type": "string",
-            "description": "Id of the employee",
-            "example": "ce12345"
-          },
-          "branchName": {
-            "type": "string",
-            "description": "Name of the branch",
-            "example": "okhla"
-          },
-          "branchCode": {
-            "type": "string",
-            "description": "Code number of the branch",
-            "example": 3232
-          },
-          "userId": {
-            "type": "number",
-            "description": "Unique id of the workmate user.",
-            "example": 3232
-          },
-          "clientName": {
-            "type": "string",
-            "description": "Name of Checked in Client.",
-            "example": "Mapmyindia"
-          },
-          "departmentName": {
-            "type": "string",
-            "description": "Name of the Checked in department",
-            "example": "product"
-          },
-          "contactPersonName": {
-            "type": "string",
-            "description": "Either client or department contact person name",
-            "example": "sundaram"
-          },
-          "checkinDateTime": {
-            "type": "string",
-            "description": "Date & Time at which user checked in against the client",
-            "example": "06/11/2019 11:06:44 AM"
-          },
-          "checkinAddress": {
-            "type": "string",
-            "description": "checked in location address",
-            "example": "1134, indira nagar, second stage, Bangalore -560008"
-          },
-          "checkoutDateTime": {
-            "type": "string",
-            "description": "Address of the checked out location",
-            "example": "14, hulsur, muniswara layout, Bangalore -560008"
-          },
-          "totalHoursSpent": {
-            "type": "string",
-            "description": "Total time spent at the client location. The time differnece between check in to check out.",
-            "example": "00:03:00"
-          },
-          "remarks": {
-            "type": "string",
-            "description": "Comments entered by the user during the check out process.",
-            "example": "collected the parcel."
-          },
-          "tags": {
-            "type": "string",
-            "description": "List of selected tags during check in. It indicates the check in purpose.",
-            "example": "Meeting"
-          },
-          "customFormData": {
+          "formsData": {
             "type": "array",
             "items": {
               "properties": {
-                "label": {
+                "employeeName": {
                   "type": "string",
-                  "description": "Name of the question or title.",
-                  "example": "Enter the cash collection details."
+                  "description": "Name of the Employee",
+                  "example": "kalaivanan Sundaram"
                 },
-                "value": {
+                "employeeId": {
                   "type": "string",
-                  "description": "Response to the question (lable)",
-                  "example": "Rs. 250 is being collected."
+                  "description": "Id of the employee",
+                  "example": "ce12345"
+                },
+                "branchName": {
+                  "type": "string",
+                  "description": "Name of the branch",
+                  "example": "okhla"
+                },
+                "branchCode": {
+                  "type": "string",
+                  "description": "Code number of the branch",
+                  "example": 3232
+                },
+                "userId": {
+                  "type": "number",
+                  "description": "Unique id of the workmate user.",
+                  "example": 3232
+                },
+                "clientName": {
+                  "type": "string",
+                  "description": "Name of Checked in Client.",
+                  "example": "Mapmyindia"
+                },
+                "departmentName": {
+                  "type": "string",
+                  "description": "Name of the Checked in department",
+                  "example": "product"
+                },
+                "contactPersonName": {
+                  "type": "string",
+                  "description": "Either client or department contact person name",
+                  "example": "sundaram"
+                },
+                "checkinDateTime": {
+                  "type": "string",
+                  "description": "Date & Time at which user checked in against the client",
+                  "example": "06/11/2019 11:06:44 AM"
+                },
+                "checkinAddress": {
+                  "type": "string",
+                  "description": "checked in location address",
+                  "example": "1134, indira nagar, second stage, Bangalore -560008"
+                },
+                "checkoutDateTime": {
+                  "type": "string",
+                  "description": "Address of the checked out location",
+                  "example": "14, hulsur, muniswara layout, Bangalore -560008"
+                },
+                "checkoutAddress": {
+                  "type": "string",
+                  "description": "checked out location address",
+                  "example": "1135, indira nagar, second stage, Bangalore -560008"
+                },
+                "totalHoursSpent": {
+                  "type": "string",
+                  "description": "Total time spent at the client location. The time differnece between check in to check out.",
+                  "example": "00:03:00"
+                },
+                "remarks": {
+                  "type": "string",
+                  "description": "Comments entered by the user during the check out process.",
+                  "example": "collected the parcel."
+                },
+                "tags": {
+                  "type": "string",
+                  "description": "List of selected tags during check in. It indicates the check in purpose.",
+                  "example": "Meeting"
+                },
+                "customFormData": {
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "label": {
+                        "type": "string",
+                        "description": "Name of the question or title.",
+                        "example": "Enter the cash collection details."
+                      },
+                      "value": {
+                        "type": "string",
+                        "description": "Response to the question (lable)",
+                        "example": "Rs. 250 is being collected."
+                      }
+                    }
+                  }
+                },
+                "clientEmailId": {
+                  "type": "string",
+                  "description": "Contact person email id of the checked in client or the department",
+                  "example": "sundaram@gmail.com"
+                },
+                "clientMobileNo": {
+                  "type": "string",
+                  "description": "Contact person mobile number of the checked in client or department",
+                  "example": 934838232
                 }
               }
             }
-          },
-          "clientEmailId": {
-            "type": "string",
-            "description": "Contact person email id of the checked in client or the department",
-            "example": "sundaram@gmail.com"
-          },
-          "clientMobileNo": {
-            "type": "string",
-            "description": "Contact person mobile number of the checked in client or department",
-            "example": 934838232
           }
         }
       },
@@ -1527,16 +1552,6 @@
             "type": "string",
             "description": "Unqiue Id of the department",
             "example": 32
-          },
-          "creationTime": {
-            "type": "string",
-            "description": "Time at which this department is being added. EPoch time.",
-            "example": 1516618791
-          },
-          "updationTime": {
-            "type": "string",
-            "description": "Time at which this department is being upated last time. It is in Epoch time.",
-            "example": 1593088033
           },
           "name": {
             "type": "string",
@@ -1557,6 +1572,16 @@
             "type": "string",
             "description": "Department cotnact person email Id",
             "example": "sales@mapmyindia.com"
+          },
+          "creationTime": {
+            "type": "string",
+            "description": "Time at which this department is being added. EPoch time.",
+            "example": 1516618791
+          },
+          "updationTime": {
+            "type": "string",
+            "description": "Time at which this department is being upated last time. It is in Epoch time.",
+            "example": 1593088033
           }
         }
       },
@@ -1620,7 +1645,7 @@
           "message": {
             "type": "string",
             "description": "Describes the type of error based on the type of response code.",
-            "example": "Mentioned User ID is not belongs to this account"
+            "example": "Missing parameter name."
           }
         }
       },
