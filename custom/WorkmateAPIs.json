@@ -2,7 +2,7 @@
   "openapi": "3.0.1",
   "info": {
     "title": "Workmate APIs",
-    "description": "A set of powerful work force management APIs which helps the user to get all the data related to their organizations such as live location employees, client details and task details etc. These workforce management APIs are powered by MapmyIndia's own Map, IoT and workmate platform. MapmyIndia Workmate easily integrates into existing cloud services via our workforce management APIs. These APIs helps to improve the organizational effiency by providing location intellegence to employees.",
+    "description": "A set of powerful work force management APIs which helps the user to get all the data related to their organizations such as live location employees, client details and task details etc. <p>These workforce management APIs are powered by MapmyIndia's own Map, IoT and workmate platform. MapmyIndia Workmate easily integrates into existing cloud services via our workforce management APIs. These APIs helps to improve the organizational effiency by providing location intellegence to employees.",
     "termsOfService": "https://www.mapmyindia.com/about/terms-conditions",
     "contact": {
       "email": "apisupport@mapmyindia.com"
@@ -31,8 +31,8 @@
           {
             "name": "apiVersion",
             "in": "header",
-            "description": "API version should be mentioned in the header along with bearer Token. Available version is v1.0, Default version is v1.0",
-            "example": "v1.0",
+            "description": "API version should be mentioned in the header along with bearer Token. Available version is v1.0.0, Default version is v1.0.0",
+            "example": "v1.0.0",
             "required": true,
             "schema": {
               "type": "string"
@@ -109,8 +109,8 @@
           {
             "name": "apiVersion",
             "in": "header",
-            "description": "API version should be mentioned in the header along with bearer Token. Available version is v1.0, Default version is v1.0",
-            "example": "v1.0",
+            "description": "API version should be mentioned in the header along with bearer Token. Available version is v1.0.0, Default version is v1.0.0",
+            "example": "v1.0.0",
             "required": true,
             "schema": {
               "type": "string"
@@ -204,8 +204,8 @@
           {
             "name": "apiVersion",
             "in": "header",
-            "description": "API version should be mentioned in the header along with bearer Token. Available version is v1.0, Default version is v1.0",
-            "example": "v1.0",
+            "description": "API version should be mentioned in the header along with bearer Token. Available version is v1.0.0, Default version is v1.0.0",
+            "example": "v1.0.0",
             "required": true,
             "schema": {
               "type": "string"
@@ -265,8 +265,8 @@
           {
             "name": "apiVersion",
             "in": "header",
-            "description": "Header for this API. Available values are v1.0, Default value is v1.0",
-            "example": "v1.0",
+            "description": "Header for this API. Available values are v1.0.0, Default value is v1.0.0",
+            "example": "v1.0.0",
             "required": true,
             "schema": {
               "type": "string"
@@ -378,8 +378,8 @@
           {
             "name": "apiVersion",
             "in": "header",
-            "description": "API version should be mentioned in the header along with bearer Token. Available version is v1.0, Default version is v1.0",
-            "example": "v1.0",
+            "description": "API version should be mentioned in the header along with bearer Token. Available version is v1.0.0, Default version is v1.0.0",
+            "example": "v1.0.0",
             "required": true,
             "schema": {
               "type": "string"
@@ -461,20 +461,20 @@
         }
       }
     },
-    "/settings/forms": {
+    "/configurations/forms": {
       "get": {
         "tags": [
-          "Company Settings"
+          "Company Configurations"
         ],
-        "operationId": "getCustomForms",
+        "operationId": "getForms",
         "summary": "To get the form's Id and their details from your account.",
         "description": "It gives all the forms which are created under your account. using this API you can get the unique Ids of differnt form and it can be used in custom form data API.",
         "parameters": [
           {
             "name": "apiVersion",
             "in": "header",
-            "description": "API version should be mentioned in the header along with bearer Token. Available version is v1.0, Default version is v1.0",
-            "example": "v1.0",
+            "description": "API version should be mentioned in the header along with bearer Token. Available version is v1.0.0, Default version is v1.0.0",
+            "example": "v1.0.0",
             "required": true,
             "schema": {
               "type": "string"
@@ -529,8 +529,8 @@
           {
             "name": "apiVersion",
             "in": "header",
-            "description": "API version should be mentioned in the header along with bearer Token. Available version is v1.0, Default version is v1.0",
-            "example": "v1.0",
+            "description": "API version should be mentioned in the header along with bearer Token. Available version is v1.0.0, Default version is v1.0.0",
+            "example": "v1.0.0",
             "required": true,
             "schema": {
               "type": "string"
@@ -647,8 +647,8 @@
           {
             "name": "apiVersion",
             "in": "header",
-            "description": "API version should be mentioned in the header along with bearer Token. Available version is v1.0, Default version is v1.0",
-            "example": "v1.0",
+            "description": "API version should be mentioned in the header along with bearer Token. Available version is v1.0.0, Default version is v1.0.0",
+            "example": "v1.0.0",
             "required": true,
             "schema": {
               "type": "string"
@@ -1490,8 +1490,8 @@
                 },
                 "checkoutDateTime": {
                   "type": "string",
-                  "description": "Address of the checked out location",
-                  "example": "14, hulsur, muniswara layout, Bangalore -560008"
+                  "description": "Date & Time at which user checked out against the client",
+                  "example": "06/11/2019 12:06:44 PM"
                 },
                 "checkoutAddress": {
                   "type": "string",
