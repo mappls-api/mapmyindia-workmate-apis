@@ -227,7 +227,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/clietCreationResponse"
+                  "$ref": "#/components/schemas/clientCreationResponse"
                 }
               }
             }
@@ -260,7 +260,7 @@
           "Task Management"
         ],
         "operationId": "getTask",
-        "summary": "To get the task details",
+        "summary": "To get the list of task and their details",
         "parameters": [
           {
             "name": "apiVersion",
@@ -362,6 +362,279 @@
           },
           "406": {
             "description": "userId not belong to your account"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Task Management"
+        ],
+        "operationId": "createTask",
+        "summary": "To create new Task",
+        "description": "Create Task API allows you to assign a new Task to your users. Using this API, You can Assign a new task with a task summary, description, assinged to user, task owner, priority of the task, task location",
+        "parameters": [
+          {
+            "name": "apiVersion",
+            "in": "header",
+            "description": "API version should be mentioned in the header along with bearer Token. Available version is v1.0.0, Default version is v1.0.0",
+            "example": "v1.0.0",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/taskObject"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Task Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/taskCreationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/apiResponse"
+                }
+              }
+            },
+            "description": "Bad Request - Invalid ID supplied or invalid data type."
+          },
+          "401": {
+            "description": "Unauthorized Request. Access to API is forbidden."
+          },
+          "403": {
+            "description": "User type is Field user. Only manager and admin type user have the access to this API"
+          },
+          "404": {
+            "description": "Not Found - URL Not Found"
+          }
+        }
+      }
+    },
+    "/tasks/{taskId}": {
+      "get": {
+        "tags": [
+          "Task Management"
+        ],
+        "operationId": "getTaskbyId",
+        "summary": "To get the task details for the given task id.",
+        "parameters": [
+          {
+            "name": "apiVersion",
+            "in": "header",
+            "description": "Header for this API. Available values are v1.0.0, Default value is v1.0.0",
+            "example": "v1.0.0",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "taskId",
+            "in": "path",
+            "description": "Unique Id of the task.",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "clientDetails",
+            "in": "query",
+            "description": "To get client location details for the task.",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "activityDetails",
+            "in": "query",
+            "description": "To get Activity details against the task.",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/taskObjectResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Content Not available for the selected Task Id."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/apiResponse"
+                }
+              }
+            },
+            "description": "Bad Request - Invalid ID supplied or invalid data type."
+          },
+          "401": {
+            "description": "Unauthorized Request. Access to API is forbidden."
+          },
+          "403": {
+            "description": "User type is Field user. Only manager and admin type user have the access to this API"
+          },
+          "404": {
+            "description": "Not Found - URL Not Found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Task Management"
+        ],
+        "operationId": "updateTask",
+        "summary": "To update the task description & status.",
+        "parameters": [
+          {
+            "name": "apiVersion",
+            "in": "header",
+            "description": "Header for this API. Available values are v1.0.0, Default value is v1.0.0",
+            "example": "v1.0.0",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "taskId",
+            "in": "path",
+            "description": "Unique Id of the task.",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "To close the task manually send the value as 9.",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "description",
+            "in": "query",
+            "description": "Task description",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Task updated successfully"
+          },
+          "204": {
+            "description": "Invalid Task Id."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/apiResponse"
+                }
+              }
+            },
+            "description": "Bad Request - Invalid ID supplied or invalid data type."
+          },
+          "401": {
+            "description": "Unauthorized Request. Access to API is forbidden."
+          },
+          "403": {
+            "description": "User type is Field user. Only manager and admin type user have the access to this API"
+          },
+          "404": {
+            "description": "Not Found - URL Not Found"
+          },
+          "406": {
+            "description": "Criteria is not met. Not able to update the status beacuse of current status."
+          }
+        }
+      }
+    },
+    "/taskLists": {
+      "get": {
+        "tags": [
+          "Task Management"
+        ],
+        "operationId": "getTaskList",
+        "summary": "To get the task list details.",
+        "parameters": [
+          {
+            "name": "apiVersion",
+            "in": "header",
+            "description": "Header for this API. Available values are v1.0.0, Default value is v1.0.0",
+            "example": "v1.0.0",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/taskListsObjectResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Content Not available."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/apiResponse"
+                }
+              }
+            },
+            "description": "Bad Request - Invalid ID supplied or invalid data type."
+          },
+          "401": {
+            "description": "Unauthorized Request. Access to API is forbidden."
+          },
+          "403": {
+            "description": "User type is Field user. Only manager and admin type user have the access to this API"
+          },
+          "404": {
+            "description": "Not Found - URL Not Found"
           }
         }
       }
@@ -488,6 +761,62 @@
               "customForms": {
                 "schema": {
                   "$ref": "#/components/schemas/formsObjectResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Content Not available."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/apiResponse"
+                }
+              }
+            },
+            "description": "Bad Request - Invalid ID supplied or invalid data type."
+          },
+          "401": {
+            "description": "Unauthorized Request. Access to API is forbidden."
+          },
+          "403": {
+            "description": "User type is Field user. Only manager and admin type user have the access to this API"
+          },
+          "404": {
+            "description": "Not Found - URL Not Found"
+          }
+        }
+      }
+    },
+    "/configurations/categories": {
+      "get": {
+        "tags": [
+          "Company Configurations"
+        ],
+        "operationId": "getclientCategories",
+        "summary": "To get the list of client category in an account",
+        "description": "It gives all the client categories in an particular account. Category id can be used to create a client.",
+        "parameters": [
+          {
+            "name": "apiVersion",
+            "in": "header",
+            "description": "API version should be mentioned in the header along with bearer Token. Available version is v1.0.0, Default version is v1.0.0",
+            "example": "v1.0.0",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "default response",
+            "content": {
+              "customForms": {
+                "schema": {
+                  "$ref": "#/components/schemas/categoriesObjectResponse"
                 }
               }
             }
@@ -1039,6 +1368,21 @@
                   "description": "Detailed description of task.",
                   "example": "Collect documents like PAN Card, Passport and the application form."
                 },
+                "priority": {
+                  "type": "number",
+                  "description": "Task priority . 0 - None, 1- Low, 2 - Medium, 3 - High.",
+                  "example": 1
+                },
+                "taskListId": {
+                  "type": "string",
+                  "description": "Unique Id number of the task lis",
+                  "example": 23
+                },
+                "taskListName": {
+                  "type": "string",
+                  "description": "Name of the Task list",
+                  "example": 323
+                },
                 "ownerId": {
                   "type": "number",
                   "description": "Unique user Id of the Task owner. The user who created this task",
@@ -1103,16 +1447,6 @@
                   "type": "string",
                   "description": "Name of the assinee. who is going to perform this task.",
                   "example": "lok priya."
-                },
-                "taskListId": {
-                  "type": "string",
-                  "description": "Unique Id number of the task lis",
-                  "example": 23
-                },
-                "taskListName": {
-                  "type": "string",
-                  "description": "Name of the Task list",
-                  "example": 323
                 },
                 "clientDetails": {
                   "type": "object",
@@ -1217,6 +1551,44 @@
                 }
               }
             }
+          }
+        }
+      },
+      "taskObject": {
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the Task or Task Summary",
+            "example": "Collect the cash from customer"
+          },
+          "description": {
+            "type": "string",
+            "description": "Deatailed description for the Task",
+            "example": "Collect the cash and give the invoice and update the System"
+          },
+          "ownerId": {
+            "type": "string",
+            "description": "The user who creates the task. Unique id of the user",
+            "example": 2121
+          },
+          "assigneeId": {
+            "type": "number",
+            "description": "Id of the user to whom this task is assinged. Unique id of the user.",
+            "example": 3232
+          },
+          "clientId": {
+            "type": "number",
+            "description": "Unique id of the client. This is the place user will perform the task.",
+            "example": 3222
+          },
+          "prioirity": {
+            "type": "number",
+            "description": "priority of the Task. 0 - None, 1 - Low, 2 - Medium, 3- High.",
+            "example": 1
           }
         }
       },
@@ -1634,6 +2006,28 @@
           }
         }
       },
+      "categoriesObjectResponse": {
+        "type": "object",
+        "properties": {
+          "categories": {
+            "type": "array",
+            "items": {
+              "properties": {
+                "categoryId": {
+                  "type": "string",
+                  "description": "Unique Id for the category",
+                  "example": 122
+                },
+                "categoryName": {
+                  "type": "string",
+                  "description": "Name of the category",
+                  "example": "Service Stations"
+                }
+              }
+            }
+          }
+        }
+      },
       "apiResponse": {
         "type": "object",
         "properties": {
@@ -1649,13 +2043,50 @@
           }
         }
       },
-      "clietCreationResponse": {
+      "clientCreationResponse": {
         "type": "object",
         "properties": {
           "id": {
             "type": "number",
             "description": "Unique Id of the client",
+            "example": 1212
+          }
+        }
+      },
+      "taskCreationResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "Unique Id of the Task.",
             "example": 12
+          }
+        }
+      },
+      "taskListsObjectResponse": {
+        "type": "object",
+        "properties": {
+          "taskLists": {
+            "type": "array",
+            "items": {
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "Unique Id of the task",
+                  "example": 32
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Name of the task",
+                  "example": "Document Collection from client"
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Detailed description of task.",
+                  "example": "Collect documents like PAN Card, Passport and the application form."
+                }
+              }
+            }
           }
         }
       }
