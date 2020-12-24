@@ -1375,7 +1375,7 @@
                 },
                 "taskListId": {
                   "type": "string",
-                  "description": "Unique Id number of the task lis",
+                  "description": "Unique Id number of the task list",
                   "example": 23
                 },
                 "taskListName": {
@@ -1557,7 +1557,9 @@
       "taskObject": {
         "type": "object",
         "required": [
-          "name"
+          "name",
+          "clientId",
+          "assigneeId"
         ],
         "properties": {
           "name": {
@@ -1589,6 +1591,11 @@
             "type": "number",
             "description": "priority of the Task. 0 - None, 1 - Low, 2 - Medium, 3- High.",
             "example": 1
+          },
+          "taskListId": {
+            "type": "string",
+            "description": "Unique Id number of the task list.",
+            "example": 23
           }
         }
       },
@@ -2084,6 +2091,11 @@
                   "type": "string",
                   "description": "Detailed description of task.",
                   "example": "Collect documents like PAN Card, Passport and the application form."
+                },
+                "taskListId": {
+                  "type": "string",
+                  "description": "Unique Id number of the task list. It can be used while creating the Task",
+                  "example": 23
                 }
               }
             }
