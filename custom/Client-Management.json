@@ -1,0 +1,491 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Client Management",
+    "description": "\nThese APIs follow OAuth2 based security. **To know more about how to create your authorization tokens, please use our authorization token URL. More details available**  [here](https://www.mapmyindia.com/api/advanced-maps/doc/authentication-api.php). <br><br>The API leverages OAuth 2.0 based security. Hence, the developer would need to send a request for an access token using their client_id and client_secret to the OAuth API. Once validated from the OAuth API, the access_token and the token_type need to be sent as Authorization header with the value: \"{`token_type`} {`access_token`}”. <br><strong>Authorization</strong>: `token_type` `access_token`.<br><br>",
+    "termsOfService": "https://www.mapmyindia.com/about/terms-conditions",
+    "contact": {
+      "email": "apisupport@mapmyindia.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://workmate.mapmyindia.com/apis/"
+    }
+  ],
+  "paths": {
+    "/clients": {
+      "get": {
+        "tags": [
+          "Client Management"
+        ],
+        "operationId": "getClient",
+        "summary": "To get all your client details",
+        "description": "Get all your client details that comes under your organization. Using this API you will be able to identify the client's unique id, name, address,lat, long, and the contact person details. Also, you can get client's department details belong to the client.",
+        "parameters": [
+          {
+            "name": "apiVersion",
+            "in": "header",
+            "description": "API version should be mentioned in the header along with bearer Token. Available version is v1.0.0, Default version is v1.0.0",
+            "example": "v1.0.0",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "startTime",
+            "in": "query",
+            "description": "EPOCH time stamp in local time. Records will be fetched from this start time.",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "endTime",
+            "in": "query",
+            "description": "EPOCH time stamp in local time. Records will be fetched till this end time.",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "description": "Unique ID of the user. Once it is mentioned, only client created by these user will be displayed.",
+            "required": false,
+            "example": "332,4323",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "clientId",
+            "in": "query",
+            "description": "Unique ID of the client. To get the details about only the mentioned client.",
+            "required": false,
+            "example": "3232,3293",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful API call",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/clientObjectResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Content not available for the selected period."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/apiResponse"
+                }
+              }
+            },
+            "description": "Bad Request - Invalid ID supplied or invalid data type."
+          },
+          "401": {
+            "description": "Unauthorized Request. Access to API is forbidden."
+          },
+          "403": {
+            "description": "User type is Field user. Only manager and admin type user have the access to this API"
+          },
+          "404": {
+            "description": "Not Found - URL Not Found"
+          },
+          "406": {
+            "description": "userId not belong to your account"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Client Management"
+        ],
+        "operationId": "createClient",
+        "summary": "To create new client",
+        "description": "Create Client API allows you to add a new client to your organization. Using this API, You can create a new client with a name, address, lat,long, contact details, Department along with their contact details.",
+        "parameters": [
+          {
+            "name": "apiVersion",
+            "in": "header",
+            "description": "API version should be mentioned in the header along with bearer Token. Available version is v1.0.0, Default version is v1.0.0",
+            "example": "v1.0.0",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/clientObject"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Client Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/clientCreationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/apiResponse"
+                }
+              }
+            },
+            "description": "Bad Request - Invalid ID supplied or invalid data type."
+          },
+          "401": {
+            "description": "Unauthorized Request. Access to API is forbidden."
+          },
+          "403": {
+            "description": "The user type is Field user. Only manager and admin type users have the access to this API"
+          },
+          "404": {
+            "description": "Not Found - URL Not Found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "clientObjectResponse": {
+        "type": "object",
+        "properties": {
+          "clients": {
+            "type": "array",
+            "items": {
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "description": "Unique ID of the client or Customer",
+                  "example": 3232
+                },
+                "status": {
+                  "type": "integer",
+                  "description": "Client status. 1 - active, 0 - inactive",
+                  "example": 1
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Name of the client or customer",
+                  "example": "ABN pvt.ltd"
+                },
+                "address": {
+                  "type": "string",
+                  "description": "Location address of the client or customer.",
+                  "example": "237, okhla phase 3, new delhi -110020"
+                },
+                "contactPersonName": {
+                  "type": "string",
+                  "description": "Contact person name of client or customer location",
+                  "example": "Dinesh"
+                },
+                "emailId": {
+                  "type": "string",
+                  "description": "Client or Customer contact email id.",
+                  "example": "workmate@mapmyindia.com"
+                },
+                "mobileNo": {
+                  "type": "string",
+                  "description": "Client or Customer contact mobile number",
+                  "example": 9348332321
+                },
+                "userId": {
+                  "type": "integer",
+                  "description": "The Id of the user who created this client or customer",
+                  "example": 3232
+                },
+                "userName": {
+                  "type": "string",
+                  "description": "Name of the user who has created this client.",
+                  "example": "kalaivanan"
+                },
+                "typeId": {
+                  "type": "integer",
+                  "description": "Unqiue ID of the client type/category.",
+                  "example": 0
+                },
+                "typeName": {
+                  "type": "string",
+                  "description": "Client category/type name",
+                  "example": "Service stations"
+                },
+                "lat": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "Latitude of the client location.",
+                  "example": 28.551506
+                },
+                "long": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "Longitude of the client location.",
+                  "example": 77.268118
+                },
+                "creationTime": {
+                  "type": "integer",
+                  "description": "Client creatation time in Local Epoch Time stamp.",
+                  "example": 1575104435
+                },
+                "updationTime": {
+                  "type": "integer",
+                  "description": "Last updated time against the client in Epoch Time.",
+                  "example": 1575104737
+                },
+                "creationTimeStr": {
+                  "type": "string",
+                  "description": "Client creation time in string format",
+                  "example": "01 Apr 2018"
+                },
+                "updationTimeStr": {
+                  "type": "string",
+                  "description": "Client updation time in string format",
+                  "example": "01 Apr 2018"
+                },
+                "viewRight": {
+                  "type": "integer",
+                  "description": "view rights of the client. 0-public , 1-team , 2-manager",
+                  "example": 2
+                },
+                "departments": {
+                  "type": "array",
+                  "description": "Details of Departments associated with the clients",
+                  "items": {
+                    "$ref": "#/components/schemas/clientDepartmentObjectResponse"
+                  }
+                },
+                "lastActivity": {
+                  "type": "object",
+                  "properties": {
+                    "Status": {
+                      "type": "integer",
+                      "description": "Last activity done by the user. 3- check-in , 4- check out, 5- client created.",
+                      "example": 4
+                    },
+                    "time": {
+                      "type": "integer",
+                      "description": "Time at which last activity is being carried out in EPOCH Time.",
+                      "example": 1525150144
+                    },
+                    "Lat": {
+                      "type": "number",
+                      "format": "double",
+                      "description": "Last activity location latitude.",
+                      "example": 28.550646
+                    },
+                    "Long": {
+                      "type": "number",
+                      "format": "double",
+                      "description": "Last activity location Longitude.",
+                      "example": 77.269003
+                    },
+                    "visitedUserId": {
+                      "type": "integer",
+                      "description": "Unique ID of the user who has done the last activity against this client.",
+                      "example": 3223
+                    },
+                    "vistedUserName": {
+                      "type": "string",
+                      "description": "Name of the user who has done the last activity aginst this client.",
+                      "example": "Megha Soni"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "clientObject": {
+        "type": "object",
+        "required": [
+          "clientName"
+        ],
+        "properties": {
+          "clientName": {
+            "type": "string",
+            "description": "Name of the client or customer location",
+            "example": "ABN pvt.ltd"
+          },
+          "address": {
+            "type": "string",
+            "description": "Client location address.",
+            "example": "237, okhla phase 3, new delhi -110020"
+          },
+          "contactPersonName": {
+            "type": "string",
+            "description": "Clients or customers Contact person name",
+            "example": "Dinesh"
+          },
+          "emailId": {
+            "type": "string",
+            "description": "Clients or Customers contact email id.",
+            "example": "workmate@mapmyindia.com"
+          },
+          "mobileNo": {
+            "type": "string",
+            "description": "Client or Customer contact mobile number",
+            "example": 9348332321
+          },
+          "typeId": {
+            "type": "integer",
+            "description": "Customer or client category based on your compnay details",
+            "example": 1
+          },
+          "lat": {
+            "type": "number",
+            "format": "double",
+            "description": "Latitude of the client location.",
+            "example": 28.551504
+          },
+          "long": {
+            "type": "number",
+            "format": "double",
+            "description": "Longitude of the client location.",
+            "example": 77.268118
+          },
+          "viewRight": {
+            "type": "integer",
+            "description": "Clients view right to the users. 0-public , 1-team , 2-manager",
+            "example": 2
+          },
+          "departments": {
+            "type": "array",
+            "description": "Departments details associated with the clients",
+            "items": {
+              "$ref": "#/components/schemas/clientDepartmentObject"
+            }
+          }
+        }
+      },
+      "clientDepartmentObjectResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unqiue Id of the department",
+            "example": 32
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the department",
+            "example": "product team"
+          },
+          "contactPersonName": {
+            "type": "string",
+            "description": "Name of the department contact person",
+            "example": "sundaram"
+          },
+          "mobileNo": {
+            "type": "string",
+            "description": "Department cotnact person mobile number",
+            "example": 9349439334
+          },
+          "emailId": {
+            "type": "string",
+            "description": "Department cotnact person email Id",
+            "example": "sales@mapmyindia.com"
+          },
+          "creationTime": {
+            "type": "string",
+            "description": "Time at which this department is being added. EPoch time.",
+            "example": 1516618791
+          },
+          "updationTime": {
+            "type": "string",
+            "description": "Time at which this department is being upated last time. It is in Epoch time.",
+            "example": 1593088033
+          }
+        }
+      },
+      "clientDepartmentObject": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the department",
+            "example": "product team"
+          },
+          "contactPersonName": {
+            "type": "string",
+            "description": "Name of the department contact person",
+            "example": "sundaram"
+          },
+          "mobileNo": {
+            "type": "string",
+            "description": "Department cotnact person mobile number",
+            "example": 9349439334
+          },
+          "emailId": {
+            "type": "string",
+            "description": "Department cotnact person email Id",
+            "example": "sales@mapmyindia.com"
+          }
+        }
+      },
+      "apiResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status Code Name",
+            "example": 400
+          },
+          "message": {
+            "type": "string",
+            "description": "Describes the type of error based on the type of response code.",
+            "example": "Missing parameter name."
+          }
+        }
+      },
+      "clientCreationResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "Unique Id of the client",
+            "example": 1212
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerToken": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

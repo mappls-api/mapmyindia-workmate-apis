@@ -1,0 +1,237 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "User Details",
+    "description": "\nThese APIs follow OAuth2 based security. **To know more about how to create your authorization tokens, please use our authorization token URL. More details available**  [here](https://www.mapmyindia.com/api/advanced-maps/doc/authentication-api.php). <br><br>The API leverages OAuth 2.0 based security. Hence, the developer would need to send a request for an access token using their client_id and client_secret to the OAuth API. Once validated from the OAuth API, the access_token and the token_type need to be sent as Authorization header with the value: \"{`token_type`} {`access_token`}”. <br><strong>Authorization</strong>: `token_type` `access_token`.<br><br>",
+    "termsOfService": "https://www.mapmyindia.com/about/terms-conditions",
+    "contact": {
+      "email": "apisupport@mapmyindia.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://workmate.mapmyindia.com/apis/"
+    }
+  ],
+  "paths": {
+    "/users": {
+      "get": {
+        "tags": [
+          "User Details"
+        ],
+        "operationId": "getUsers",
+        "summary": "To get all the user details which belongs to your organization.",
+        "description": "Gives all the users details of your organization. Using this API, you will be able to identify the workmate user id, workplace location, employee Id and other important details related to a user profile. You can only get the list of users who belongs to your organization.",
+        "parameters": [
+          {
+            "name": "apiVersion",
+            "in": "header",
+            "description": "API version should be mentioned in the header along with bearer Token. Available version is v1.0.0, Default version is v1.0.0",
+            "example": "v1.0.0",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "workPlace",
+            "in": "query",
+            "description": "Send true if you want to get the work place location details",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "description": "send the user Ids in comma separated format to get the list of selected user details. If it is not passed all the user details will be fetched.",
+            "required": false,
+            "example": "3223,23",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "API call is succesful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/userObjectResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "content not found. Check your input values."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/apiResponse"
+                }
+              }
+            },
+            "description": "Bad Request - Invalid ID supplied or invalid data type."
+          },
+          "401": {
+            "description": "Unauthorized Request. Access to API is forbidden."
+          },
+          "403": {
+            "description": "User type is Field user. Only manager and admin type user have the access to this API"
+          },
+          "404": {
+            "description": "Not Found - URL Not Found"
+          },
+          "406": {
+            "description": "userId not belong to your account"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "userObjectResponse": {
+        "type": "object",
+        "properties": {
+          "users": {
+            "type": "array",
+            "items": {
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "description": "Unqiue workmate Id of the user",
+                  "example": 232
+                },
+                "emailId": {
+                  "type": "string",
+                  "description": "Unique email Id of the user. This will be used to login to workmate account.",
+                  "example": "vtsupport@mapmyindia.com"
+                },
+                "originId": {
+                  "type": "integer",
+                  "description": "Users workmate account id",
+                  "example": 32
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Name of the user.",
+                  "example": "kalaivanan"
+                },
+                "status": {
+                  "type": "string",
+                  "description": "It gives users active or inactive status . 1 - Active user, 0- Inactive user.",
+                  "example": 1
+                },
+                "type": {
+                  "type": "integer",
+                  "description": "Three user type is there in workmate. 0 -admin, 1 -manager, 2 - field user",
+                  "example": 0
+                },
+                "creationTime": {
+                  "description": "Time at which user is being created over workmate. It is an Local EPCH time.",
+                  "type": "integer",
+                  "example": 1458987749
+                },
+                "workplaceId": {
+                  "type": "integer",
+                  "description": "Unique Id of the Work place.",
+                  "example": 32
+                },
+                "costFactor": {
+                  "type": "number",
+                  "format": "float",
+                  "description": "per km travelled cost. It will be multiplyed against distance travelled by the user.",
+                  "example": 3.4
+                },
+                "reportingToName": {
+                  "type": "string",
+                  "description": "Direct manager of the user.",
+                  "example": "Sanjay"
+                },
+                "reportingToId": {
+                  "type": "string",
+                  "description": "Manger's unique user Id",
+                  "example": 2323
+                },
+                "employeeId": {
+                  "type": "string",
+                  "description": "Employee unquie ID based on the company record",
+                  "example": "CE003121"
+                },
+                "branchName": {
+                  "type": "string",
+                  "description": "Users branch name of the work place.",
+                  "example": "Bangalore"
+                },
+                "branchCode": {
+                  "type": "string",
+                  "description": "Users branch code of the work place.",
+                  "example": "CE12"
+                },
+                "workPlace": {
+                  "$ref": "#/components/schemas/workPlaceDetailsObjectResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "workPlaceDetailsObjectResponse": {
+        "properties": {
+          "lat": {
+            "type": "number",
+            "description": "Workmate place location latitude",
+            "example": 28.3923
+          },
+          "long": {
+            "type": "number",
+            "description": "Workmate place location longitude.",
+            "example": 78.3223
+          },
+          "name": {
+            "type": "string",
+            "description": "Work location name",
+            "example": "Bangalore office"
+          },
+          "address": {
+            "type": "string",
+            "description": "work place address",
+            "example": "1134, Dr SK Karim Khan Road, HAL Stage 2, Indiranagar, Bengaluru, Karnataka. 0 m from MapmyIndia Bangalore pin-560008 (India)"
+          }
+        }
+      },
+      "apiResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status Code Name",
+            "example": 400
+          },
+          "message": {
+            "type": "string",
+            "description": "Describes the type of error based on the type of response code.",
+            "example": "Missing parameter name."
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerToken": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

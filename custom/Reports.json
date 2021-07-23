@@ -1,0 +1,732 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Reports",
+    "description": "\nThese APIs follow OAuth2 based security. **To know more about how to create your authorization tokens, please use our authorization token URL. More details available**  [here](https://www.mapmyindia.com/api/advanced-maps/doc/authentication-api.php). <br><br>The API leverages OAuth 2.0 based security. Hence, the developer would need to send a request for an access token using their client_id and client_secret to the OAuth API. Once validated from the OAuth API, the access_token and the token_type need to be sent as Authorization header with the value: \"{`token_type`} {`access_token`}”. <br><strong>Authorization</strong>: `token_type` `access_token`.<br><br>",
+    "termsOfService": "https://www.mapmyindia.com/about/terms-conditions",
+    "contact": {
+      "email": "apisupport@mapmyindia.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://workmate.mapmyindia.com/apis/"
+    }
+  ],
+  "paths": {
+    "/reports/movements/{userId}": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "operationId": "getMovementData",
+        "summary": "Get users movement details",
+        "description": "Get individual users location data which includes address, time, speed, phones's battery level.",
+        "parameters": [
+          {
+            "name": "apiVersion",
+            "in": "header",
+            "description": "API version should be mentioned in the header along with bearer Token. Available version is v1.0.0, Default version is v1.0.0",
+            "example": "v1.0.0",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "description": "Unique ID of the user.",
+            "example": 32323,
+            "schema": {
+              "type": "number",
+              "items": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          },
+          {
+            "name": "startTime",
+            "in": "query",
+            "required": true,
+            "description": "Start time of the report. At a time maximum of 31 days can data can be fetched together. Time in epoch time.",
+            "example": 1595395890,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "endTime",
+            "in": "query",
+            "required": true,
+            "description": "Start time of the report. At a time maximum of 31 days can data can be fetched together. Time in epoch time.",
+            "example": 1595325880,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/movementDataObjectResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Content Not available for the selected period."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/apiResponse"
+                }
+              }
+            },
+            "description": "Bad Request - Invalid ID supplied or invalid data type."
+          },
+          "401": {
+            "description": "Unauthorized Request. Access to API is forbidden."
+          },
+          "403": {
+            "description": "The user type is Field user. Only manager and admin type user have the access to this API"
+          },
+          "404": {
+            "description": "Not Found - URL Not Found"
+          },
+          "406": {
+            "description": "userId not belong to your account"
+          }
+        }
+      }
+    },
+    "/reports/forms/{formId}": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "operationId": "getCustomFormsData",
+        "summary": "To get form based check in/out details",
+        "description": "Get the complete detail about the check in/check-out activity against the particular form. Get the form Id from the custom form API.",
+        "parameters": [
+          {
+            "name": "apiVersion",
+            "in": "header",
+            "description": "API version should be mentioned in the header along with bearer Token. Available version is v1.0.0, Default version is v1.0.0",
+            "example": "v1.0.0",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "formId",
+            "in": "path",
+            "description": "Unique ID of the Form. It can be fetched from company setting forms API.",
+            "example": "AD329238910921",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "startTime",
+            "in": "query",
+            "required": true,
+            "description": "Start time of the report. At a time maximum of 31 days can data can be fetched together. Time in epoch time.",
+            "example": 1595395890,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "endTime",
+            "in": "query",
+            "required": true,
+            "description": "Start time of the report. At a time maximum of 31 days can data can be fetched together. Time in epoch time.",
+            "example": 1595325880,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "required": false,
+            "description": "Unique ID of the user.",
+            "example": 32323,
+            "schema": {
+              "type": "number",
+              "items": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          },
+          {
+            "name": "clientId",
+            "in": "query",
+            "required": false,
+            "description": "Unique ID of the client.",
+            "example": 2133,
+            "schema": {
+              "type": "number",
+              "items": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/formsDataObjectResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Content Not available for the selected period."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/apiResponse"
+                }
+              }
+            },
+            "description": "Bad Request - Invalid ID supplied or invalid data type."
+          },
+          "401": {
+            "description": "Unauthorized Request. Access to API is forbidden."
+          },
+          "403": {
+            "description": "User type is Field user. Only manager and admin type user have the access to this API"
+          },
+          "404": {
+            "description": "Not Found - URL Not Found"
+          },
+          "406": {
+            "description": "userId not belong to your account"
+          }
+        }
+      }
+    },
+    "/reports/attendances": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "operationId": "gattendanceetAttendanceData",
+        "summary": "Get users attendance details with travelled distance.",
+        "parameters": [
+          {
+            "name": "apiVersion",
+            "in": "header",
+            "description": "API version should be mentioned in the header along with bearer Token. Available version is v1.0.0, Default version is v1.0.0",
+            "example": "v1.0.0",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "startTime",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "endTime",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/attendanceDataObjectResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/apiResponse"
+                }
+              }
+            },
+            "description": "Bad Request - Invalid ID supplied or invalid data type."
+          },
+          "401": {
+            "description": "Unauthorized Request. Access to API is forbidden."
+          },
+          "403": {
+            "description": "The user type is Field user. Only manager and admin user type user has the access to this API."
+          },
+          "404": {
+            "description": "Not Found - URL Not Found"
+          },
+          "406": {
+            "description": "userId not belong to your account"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "movementDataObjectResponse": {
+        "type": "object",
+        "properties": {
+          "movements": {
+            "type": "array",
+            "items": {
+              "properties": {
+                "address": {
+                  "type": "string",
+                  "description": "Users location address for the given time.",
+                  "example": "40/2, Kalasipalyam, Bengaluru, Karnataka. 18 m from MP Auto Consultancy pin- 560002 (India)"
+                },
+                "distance": {
+                  "type": "string",
+                  "description": "Total traveled distance from start time to this location for the selected period. It is in a kilometer.",
+                  "example": "10. 00"
+                },
+                "driftStatus": {
+                  "type": "integer",
+                  "description": "Based on the GPS drift this location data is accepted or rejected will be stated. 1 - accepted, 0 - rejected.",
+                  "example": 1
+                },
+                "heading": {
+                  "type": "integer",
+                  "description": "GPS angle. It gives the direction of the user.",
+                  "example": 234
+                },
+                "lat": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "Latitude value of location",
+                  "example": 28.550607
+                },
+                "long": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "longitude value of the location.",
+                  "example": 77.843835
+                },
+                "speed": {
+                  "type": "integer",
+                  "description": "Speed of user at that time. It is a GPS speed.It is in Km/hr",
+                  "example": 234
+                },
+                "movementStatus": {
+                  "type": "string",
+                  "description": "Stopped or moving status will be there for the user.",
+                  "example": "stopped"
+                },
+                "gpsTime": {
+                  "type": "integer",
+                  "description": "GPS time in epochtime stamp. It is the time at which location is being collected from the mobile phone.",
+                  "example": 1593856120
+                },
+                "insertTime": {
+                  "type": "integer",
+                  "description": "Time at which location packet is being received at the server end. It is normally called as GPRS time. it is in EPOCH time format.",
+                  "example": 1593856203
+                },
+                "internalBatteryLevel": {
+                  "type": "integer",
+                  "description": "Phones battery percentage.",
+                  "example": 24
+                }
+              }
+            }
+          }
+        }
+      },
+      "attendanceDataObjectResponse": {
+        "type": "object",
+        "properties": {
+          "attendances": {
+            "type": "array",
+            "items": {
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Name of the user.",
+                  "example": "Lok Priya"
+                },
+                "employeeId": {
+                  "type": "string",
+                  "description": "Id of the employee",
+                  "example": "ce003232"
+                },
+                "branchName": {
+                  "type": "string",
+                  "description": "Employees Branch Name",
+                  "example": "Bangalore"
+                },
+                "branchCode": {
+                  "type": "string",
+                  "description": "Employee's Branch Code",
+                  "example": 232
+                },
+                "userId": {
+                  "type": "string",
+                  "description": "Employee's Branch Code",
+                  "example": 232
+                },
+                "workStartTime": {
+                  "type": "integer",
+                  "description": "Time at which work is being started in Epoch Time.",
+                  "example": 1573064999
+                },
+                "workEndTime": {
+                  "type": "integer",
+                  "description": "Time at which work is being started in Epoch Time.",
+                  "example": 1573018435
+                },
+                "workEndRemark": {
+                  "type": "string",
+                  "description": "Remarks entered by the user while concluding the work.",
+                  "example": "Completed todays work."
+                },
+                "workStartRemark": {
+                  "type": "string",
+                  "description": "emarks entered by the user while starting the work.",
+                  "example": "Starting my work from client location."
+                },
+                "workEndAddress": {
+                  "type": "string",
+                  "description": "Location at which work is being concluded",
+                  "example": "237,okhla phase3, New delhi -110020"
+                },
+                "workStartAddress": {
+                  "type": "string",
+                  "description": "Location at which work is being concluded",
+                  "example": "237,okhla phase3, New delhi -110020"
+                },
+                "workEndLatitude": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "Latitude value of Work end location",
+                  "example": 28.550607
+                },
+                "workEndLongitude": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "Longitude value of Work end location",
+                  "example": 77.268906
+                },
+                "workStartLatitude": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "Longitude value of Work Start location",
+                  "example": 28.533615
+                },
+                "workStartLongitude": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "Longitude value of Work Start location",
+                  "example": 77.2596
+                },
+                "workEndOdometer": {
+                  "type": "number",
+                  "format": "float",
+                  "description": "work end Odometer reading.",
+                  "example": 20
+                },
+                "workStartOdometer": {
+                  "type": "number",
+                  "format": "float",
+                  "description": "Work start Odometer reading.",
+                  "example": 10
+                },
+                "costFactor": {
+                  "type": "number",
+                  "format": "float",
+                  "description": "Per km traveled cost. It will be multiplied against distance traveled by the user.",
+                  "example": 3.5
+                },
+                "distance": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "Total travel distance between work start to work end activity. It is calculated based on the location details collected from app",
+                  "example": 26.07931
+                }
+              }
+            }
+          }
+        }
+      },
+      "formsDataObjectResponse": {
+        "type": "object",
+        "properties": {
+          "formsData": {
+            "type": "array",
+            "items": {
+              "properties": {
+                "employeeName": {
+                  "type": "string",
+                  "description": "Name of the Employee",
+                  "example": "kalaivanan Sundaram"
+                },
+                "employeeId": {
+                  "type": "string",
+                  "description": "Id of the employee",
+                  "example": "ce12345"
+                },
+                "branchName": {
+                  "type": "string",
+                  "description": "Name of the branch",
+                  "example": "okhla"
+                },
+                "branchCode": {
+                  "type": "string",
+                  "description": "Code number of the branch",
+                  "example": 3232
+                },
+                "userId": {
+                  "type": "number",
+                  "description": "Unique id of the workmate user.",
+                  "example": 3232
+                },
+                "clientName": {
+                  "type": "string",
+                  "description": "Name of Checked in Client.",
+                  "example": "Mapmyindia"
+                },
+                "departmentName": {
+                  "type": "string",
+                  "description": "Name of the Checked in department",
+                  "example": "product"
+                },
+                "contactPersonName": {
+                  "type": "string",
+                  "description": "Either client or department contact person name",
+                  "example": "sundaram"
+                },
+                "checkinDateTime": {
+                  "type": "string",
+                  "description": "Date & Time at which user checked in against the client",
+                  "example": "06/11/2019 11:06:44 AM"
+                },
+                "checkinAddress": {
+                  "type": "string",
+                  "description": "checked in location address",
+                  "example": "1134, indira nagar, second stage, Bangalore -560008"
+                },
+                "checkoutDateTime": {
+                  "type": "string",
+                  "description": "Date & Time at which user checked out against the client",
+                  "example": "06/11/2019 12:06:44 PM"
+                },
+                "checkoutAddress": {
+                  "type": "string",
+                  "description": "checked out location address",
+                  "example": "1135, indira nagar, second stage, Bangalore -560008"
+                },
+                "totalHoursSpent": {
+                  "type": "string",
+                  "description": "Total time spent at the client location. The time differnece between check-in to check out.",
+                  "example": "00:03:00"
+                },
+                "remarks": {
+                  "type": "string",
+                  "description": "Comments entered by the user during the check-out process.",
+                  "example": "collected the parcel."
+                },
+                "tags": {
+                  "type": "string",
+                  "description": "List of selected tags during check in. It indicates the check in purpose.",
+                  "example": "Meeting"
+                },
+                "customFormData": {
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "label": {
+                        "type": "string",
+                        "description": "Name of the question or title.",
+                        "example": "Enter the cash collection details."
+                      },
+                      "value": {
+                        "type": "string",
+                        "description": "Response to the question (lable)",
+                        "example": "Rs. 250 is being collected."
+                      }
+                    }
+                  }
+                },
+                "clientEmailId": {
+                  "type": "string",
+                  "description": "Contact person email id of the checked in client or the department",
+                  "example": "sundaram@gmail.com"
+                },
+                "clientMobileNo": {
+                  "type": "string",
+                  "description": "Contact person mobile number of the checked in client or department",
+                  "example": 934838232
+                }
+              }
+            }
+          }
+        }
+      },
+      "clientDepartmentObjectResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unqiue Id of the department",
+            "example": 32
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the department",
+            "example": "product team"
+          },
+          "contactPersonName": {
+            "type": "string",
+            "description": "Name of the department contact person",
+            "example": "sundaram"
+          },
+          "mobileNo": {
+            "type": "string",
+            "description": "Department cotnact person mobile number",
+            "example": 9349439334
+          },
+          "emailId": {
+            "type": "string",
+            "description": "Department cotnact person email Id",
+            "example": "sales@mapmyindia.com"
+          },
+          "creationTime": {
+            "type": "string",
+            "description": "Time at which this department is being added. EPoch time.",
+            "example": 1516618791
+          },
+          "updationTime": {
+            "type": "string",
+            "description": "Time at which this department is being upated last time. It is in Epoch time.",
+            "example": 1593088033
+          }
+        }
+      },
+      "clientDepartmentObject": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the department",
+            "example": "product team"
+          },
+          "contactPersonName": {
+            "type": "string",
+            "description": "Name of the department contact person",
+            "example": "sundaram"
+          },
+          "mobileNo": {
+            "type": "string",
+            "description": "Department cotnact person mobile number",
+            "example": 9349439334
+          },
+          "emailId": {
+            "type": "string",
+            "description": "Department cotnact person email Id",
+            "example": "sales@mapmyindia.com"
+          }
+        }
+      },
+      "workPlaceDetailsObjectResponse": {
+        "properties": {
+          "lat": {
+            "type": "number",
+            "description": "Workmate place location latitude",
+            "example": 28.3923
+          },
+          "long": {
+            "type": "number",
+            "description": "Workmate place location longitude.",
+            "example": 78.3223
+          },
+          "name": {
+            "type": "string",
+            "description": "Work location name",
+            "example": "Bangalore office"
+          },
+          "address": {
+            "type": "string",
+            "description": "work place address",
+            "example": "1134, Dr SK Karim Khan Road, HAL Stage 2, Indiranagar, Bengaluru, Karnataka. 0 m from MapmyIndia Bangalore pin-560008 (India)"
+          }
+        }
+      },
+      "apiResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status Code Name",
+            "example": 400
+          },
+          "message": {
+            "type": "string",
+            "description": "Describes the type of error based on the type of response code.",
+            "example": "Missing parameter name."
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerToken": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

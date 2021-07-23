@@ -2,7 +2,7 @@
   "openapi": "3.0.1",
   "info": {
     "title": "Workmate APIs",
-    "description": "A set of powerful work force management APIs which helps the user to get all the data related to their organizations such as live location employees, client details and task details etc. <p>These workforce management APIs are powered by MapmyIndia's own Map, IoT and workmate platform. MapmyIndia Workmate easily integrates into existing cloud services via our workforce management APIs. These APIs helps to improve the organizational effiency by providing location intellegence to employees.",
+    "description": "\nThese APIs follow OAuth2 based security. **To know more about how to create your authorization tokens, please use our authorization token URL. More details available**  [here](https://www.mapmyindia.com/api/advanced-maps/doc/authentication-api.php). <br><br>The API leverages OAuth 2.0 based security. Hence, the developer would need to send a request for an access token using their client_id and client_secret to the OAuth API. Once validated from the OAuth API, the access_token and the token_type need to be sent as Authorization header with the value: \"{`token_type`} {`access_token`}”. <br><strong>Authorization</strong>: `token_type` `access_token`.<br><br>",
     "termsOfService": "https://www.mapmyindia.com/about/terms-conditions",
     "contact": {
       "email": "apisupport@mapmyindia.com"
@@ -26,7 +26,7 @@
         ],
         "operationId": "getUsers",
         "summary": "To get all the user details which belongs to your organization.",
-        "description": "Gives all the users details of your organization. Using this API, you will be able to identify the workmate user id, workplace location, employee Id and other important details related to user profile. You can only get the list of users who belongs to your organization.",
+        "description": "Gives all the users details of your organization. Using this API, you will be able to identify the workmate user id, workplace location, employee Id and other important details related to a user profile. You can only get the list of users who belongs to your organization.",
         "parameters": [
           {
             "name": "apiVersion",
@@ -100,11 +100,11 @@
     "/clients": {
       "get": {
         "tags": [
-          "Client Details"
+          "Client Management"
         ],
         "operationId": "getClient",
         "summary": "To get all your client details",
-        "description": "Get all your client details which comes under your organization. Using this API you will be able to identify the client's unique id, name, address,lat,long, and the cotanct person details. Also, you can get client's department details belong to the client.",
+        "description": "Get all your client details that comes under your organization. Using this API you will be able to identify the client's unique id, name, address,lat, long, and the contact person details. Also, you can get client's department details belong to the client.",
         "parameters": [
           {
             "name": "apiVersion",
@@ -195,11 +195,11 @@
       },
       "post": {
         "tags": [
-          "Client Details"
+          "Client Management"
         ],
         "operationId": "createClient",
         "summary": "To create new client",
-        "description": "Create Client API allows you to add a new client into your organization. Using this API, You can create a new client with a name, address, lat,long, contact details, Department along with their contact details.",
+        "description": "Create Client API allows you to add a new client to your organization. Using this API, You can create a new client with a name, address, lat,long, contact details, Department along with their contact details.",
         "parameters": [
           {
             "name": "apiVersion",
@@ -246,7 +246,7 @@
             "description": "Unauthorized Request. Access to API is forbidden."
           },
           "403": {
-            "description": "User type is Field user. Only manager and admin type user have the access to this API"
+            "description": "The user type is Field user. Only manager and admin type users have the access to this API"
           },
           "404": {
             "description": "Not Found - URL Not Found"
@@ -260,7 +260,7 @@
           "Task Management"
         ],
         "operationId": "getTask",
-        "summary": "To get the list of task and their details",
+        "summary": "To get the list of tasks and their details",
         "parameters": [
           {
             "name": "apiVersion",
@@ -361,7 +361,7 @@
             "description": "Not Found - URL Not Found"
           },
           "406": {
-            "description": "userId not belong to your account"
+            "description": "userId does not belong to your account"
           }
         }
       },
@@ -371,7 +371,7 @@
         ],
         "operationId": "createTask",
         "summary": "To create new Task",
-        "description": "Create Task API allows you to assign a new Task to your users. Using this API, You can Assign a new task with a task summary, description, assinged to user, task owner, priority of the task, task location",
+        "description": "Create Task API allows you to assign a new Task to your users. Using this API, You can Assign a new task with a task summary, description, assigned to user, task owner, the priority of the task, task location",
         "parameters": [
           {
             "name": "apiVersion",
@@ -646,7 +646,7 @@
         ],
         "operationId": "getMovementData",
         "summary": "Get users movement details",
-        "description": "Get indivudual users location data which includes address, time, speed, phones's battery level.",
+        "description": "Get individual users location data which includes address, time, speed, phones's battery level.",
         "parameters": [
           {
             "name": "apiVersion",
@@ -723,7 +723,7 @@
             "description": "Unauthorized Request. Access to API is forbidden."
           },
           "403": {
-            "description": "User type is Field user. Only manager and admin type user have the access to this API"
+            "description": "The user type is Field user. Only manager and admin type user have the access to this API"
           },
           "404": {
             "description": "Not Found - URL Not Found"
@@ -741,7 +741,7 @@
         ],
         "operationId": "getForms",
         "summary": "To get the form's Id and their details from your account.",
-        "description": "It gives all the forms which are created under your account. using this API you can get the unique Ids of differnt form and it can be used in custom form data API.",
+        "description": "It gives all the forms which are created under your account. using this API you can get the unique Ids of different form and it can be used in custom form data API.",
         "parameters": [
           {
             "name": "apiVersion",
@@ -853,7 +853,7 @@
         ],
         "operationId": "getCustomFormsData",
         "summary": "To get form based check in/out details",
-        "description": "Get the complete detail about the check in/check out activity against the particular form. Get the form Id from the custom form API.",
+        "description": "Get the complete detail about the check in/check-out activity against the particular form. Get the form Id from the custom form API.",
         "parameters": [
           {
             "name": "apiVersion",
@@ -1036,7 +1036,7 @@
             "description": "Unauthorized Request. Access to API is forbidden."
           },
           "403": {
-            "description": "User type is Field user. Only manager and admin ser type user has the access to this API."
+            "description": "The user type is Field user. Only manager and admin user type user has the access to this API."
           },
           "404": {
             "description": "Not Found - URL Not Found"
@@ -1247,7 +1247,7 @@
                   "properties": {
                     "Status": {
                       "type": "integer",
-                      "description": "Last activity done by the user. 3- check in , 4- check out, 5- client created.",
+                      "description": "Last activity done by the user. 3- check-in , 4- check out, 5- client created.",
                       "example": 4
                     },
                     "time": {
@@ -1430,8 +1430,8 @@
                 },
                 "clientName": {
                   "type": "string",
-                  "description": "Name of the client. The task should be perfomed at this client lcoation.",
-                  "example": "Cafe coffe day Indiranagar"
+                  "description": "Name of the client. The task should be performed at this client lcoation.",
+                  "example": "Cafe coffee day Indiranagar"
                 },
                 "departmentName": {
                   "type": "string",
@@ -1613,7 +1613,7 @@
                 },
                 "distance": {
                   "type": "string",
-                  "description": "Total travelled distance from start time to this location time period.It is in kilometer.",
+                  "description": "Total traveled distance from start time to this location for the selected period. It is in a kilometer.",
                   "example": "10. 00"
                 },
                 "driftStatus": {
@@ -1769,7 +1769,7 @@
                 "costFactor": {
                   "type": "number",
                   "format": "float",
-                  "description": "Per km travelled cost. It will be multiplyed against distance travelled by the user.",
+                  "description": "Per km traveled cost. It will be multiplied against distance traveled by the user.",
                   "example": 3.5
                 },
                 "distance": {
@@ -1879,12 +1879,12 @@
                 },
                 "totalHoursSpent": {
                   "type": "string",
-                  "description": "Total time spent at the client location. The time differnece between check in to check out.",
+                  "description": "Total time spent at the client location. The time differnece between check-in to check out.",
                   "example": "00:03:00"
                 },
                 "remarks": {
                   "type": "string",
-                  "description": "Comments entered by the user during the check out process.",
+                  "description": "Comments entered by the user during the check-out process.",
                   "example": "collected the parcel."
                 },
                 "tags": {

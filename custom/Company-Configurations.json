@@ -1,0 +1,210 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Company Configurations",
+    "description": "\nThese APIs follow OAuth2 based security. **To know more about how to create your authorization tokens, please use our authorization token URL. More details available**  [here](https://www.mapmyindia.com/api/advanced-maps/doc/authentication-api.php). <br><br>The API leverages OAuth 2.0 based security. Hence, the developer would need to send a request for an access token using their client_id and client_secret to the OAuth API. Once validated from the OAuth API, the access_token and the token_type need to be sent as Authorization header with the value: \"{`token_type`} {`access_token`}”. <br><strong>Authorization</strong>: `token_type` `access_token`.<br><br>",
+    "termsOfService": "https://www.mapmyindia.com/about/terms-conditions",
+    "contact": {
+      "email": "apisupport@mapmyindia.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://workmate.mapmyindia.com/apis/"
+    }
+  ],
+  "paths": {
+    "/configurations/forms": {
+      "get": {
+        "tags": [
+          "Company Configurations"
+        ],
+        "operationId": "getForms",
+        "summary": "To get the form's Id and their details from your account.",
+        "description": "It gives all the forms which are created under your account. using this API you can get the unique Ids of different form and it can be used in custom form data API.",
+        "parameters": [
+          {
+            "name": "apiVersion",
+            "in": "header",
+            "description": "API version should be mentioned in the header along with bearer Token. Available version is v1.0.0, Default version is v1.0.0",
+            "example": "v1.0.0",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "default response",
+            "content": {
+              "customForms": {
+                "schema": {
+                  "$ref": "#/components/schemas/formsObjectResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Content Not available."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/apiResponse"
+                }
+              }
+            },
+            "description": "Bad Request - Invalid ID supplied or invalid data type."
+          },
+          "401": {
+            "description": "Unauthorized Request. Access to API is forbidden."
+          },
+          "403": {
+            "description": "User type is Field user. Only manager and admin type user have the access to this API"
+          },
+          "404": {
+            "description": "Not Found - URL Not Found"
+          }
+        }
+      }
+    },
+    "/configurations/categories": {
+      "get": {
+        "tags": [
+          "Company Configurations"
+        ],
+        "operationId": "getclientCategories",
+        "summary": "To get the list of client category in an account",
+        "description": "It gives all the client categories in an particular account. Category id can be used to create a client.",
+        "parameters": [
+          {
+            "name": "apiVersion",
+            "in": "header",
+            "description": "API version should be mentioned in the header along with bearer Token. Available version is v1.0.0, Default version is v1.0.0",
+            "example": "v1.0.0",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "default response",
+            "content": {
+              "customForms": {
+                "schema": {
+                  "$ref": "#/components/schemas/categoriesObjectResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Content Not available."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/apiResponse"
+                }
+              }
+            },
+            "description": "Bad Request - Invalid ID supplied or invalid data type."
+          },
+          "401": {
+            "description": "Unauthorized Request. Access to API is forbidden."
+          },
+          "403": {
+            "description": "User type is Field user. Only manager and admin type user have the access to this API"
+          },
+          "404": {
+            "description": "Not Found - URL Not Found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "formsObjectResponse": {
+        "type": "object",
+        "properties": {
+          "forms": {
+            "type": "array",
+            "items": {
+              "properties": {
+                "formId": {
+                  "type": "string",
+                  "description": "Forms unique ID, Which will be used in Custom Forms data API to get the details.",
+                  "example": "5bb5e97a390bec703259364d"
+                },
+                "formName": {
+                  "type": "string",
+                  "description": "Name of the Form.",
+                  "example": "Delivery Details"
+                },
+                "formDescription": {
+                  "type": "string",
+                  "description": "Detailed description of the Form",
+                  "example": "Enter the delivery details while doing checkout"
+                }
+              }
+            }
+          }
+        }
+      },
+      "categoriesObjectResponse": {
+        "type": "object",
+        "properties": {
+          "categories": {
+            "type": "array",
+            "items": {
+              "properties": {
+                "categoryId": {
+                  "type": "string",
+                  "description": "Unique Id for the category",
+                  "example": 122
+                },
+                "categoryName": {
+                  "type": "string",
+                  "description": "Name of the category",
+                  "example": "Service Stations"
+                }
+              }
+            }
+          }
+        }
+      },
+      "apiResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status Code Name",
+            "example": 400
+          },
+          "message": {
+            "type": "string",
+            "description": "Describes the type of error based on the type of response code.",
+            "example": "Missing parameter name."
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerToken": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
